@@ -13,20 +13,18 @@ import org.chocosolver.solver.variables.VariableFactory;
 public class Agent {
 
     String Board;
-
+    Grid SudokuPuzzle;
+    Solver solver;
 
     public Agent(String board){
         Board = board;
+        solver = new Solver("titties");
     }
 
-    public void test(){
+    public void Solver(){
         Solver solver = new Solver("First problem");
         IntVar[][] vs = VariableFactory.boundedMatrix("vs", 9, 9, 1, 9, solver);
-        for(int i = 0; i < 9; i++) {
-            for(int j = 0; j < 9; j++) {
-                vs[i][j] = Board.charAt(j+i);
-            }
-        }
+
         solver.post(IntConstraintFactory.arithm(x, "+", y, "<", 5));
         // 8 // 4. Define the search strategy 9
         solver.set(IntStrategyFactory.lexico_LB(x, y));
