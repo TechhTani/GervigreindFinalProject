@@ -1,7 +1,10 @@
 /**
  * Created by Kristj�n on 1.4.2016.
  */
+import static org.chocosolver.solver.search.strategy.ISF.*;
+
 public class State {
+
     /*
 	 * Map of suduko table
 	 */
@@ -33,6 +36,7 @@ public class State {
     public int evaluate(){
         return 0;
     }
+
 
 
 
