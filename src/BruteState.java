@@ -10,9 +10,9 @@ public class BruteState {
 	 */
 
     //Each cell contains value & possible values
-    BruteCell[][] sudukoTable = new BruteCell[9][9];
+    Cell[][] sudukoTable = new Cell[9][9];
 
-    public BruteState(BruteCell[][] sudukoTable){
+    public BruteState(Cell[][] sudukoTable){
         this.sudukoTable = sudukoTable;
     }
 

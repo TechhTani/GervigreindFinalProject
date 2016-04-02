@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class BruteForceAgent {
 
     final int SIZE = 9;
-    BruteCell[][] board;
+    Cell[][] board;
     BruteState baseState;
 
     public BruteForceAgent(int[][] board){
 
-        //Convert int[][] into BruteCell[][]
+        //Convert int[][] into Cell[][]
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; i < SIZE; j++){
                 if(board[i][j] != 0){
