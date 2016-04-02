@@ -1,5 +1,5 @@
 /**
- * Created by Kristján on 1.4.2016.
+ * Created by Kristjï¿½n on 1.4.2016.
  */
 import org.chocosolver.solver.Solver;
 import static org.chocosolver.solver.search.strategy.ISF.*;
@@ -12,7 +12,7 @@ import org.chocosolver.solver.variables.VariableFactory;
 
 public class Agent {
 
-    const int SIZE = 9;
+    final int SIZE = 9;
     int[][] Board;
     SudokuGrid SudokuPuzzle;
 
@@ -43,8 +43,21 @@ public class Agent {
             }
         }
 
+        //Method to populate Boxing #2
+        for(int i = 0; i < SIZE; i+=3){
+            for(int j = 0; j < SIZE; j++){
+                boxing[i][j] = ripped[0][i+j];
+                boxing[i][j+3] = ripped[1][i+j];
+                boxing[i][j+6] = ripped[2][i+j];
 
+                boxing[i+3][j] = ripped[3][i+j];
+                boxing[i+3][j+3] = ripped[4][i+j];
+                boxing[i+3][j+6] = ripped[5][i+j];
+
+                boxing[i+6][j] = ripped[6][i+j];
+                boxing[i+6][j+3] = ripped[7][i+j];
+                boxing[i+6][j+6] = ripped[8][i+j];
+            }
+        }
     }
-
-
 }
