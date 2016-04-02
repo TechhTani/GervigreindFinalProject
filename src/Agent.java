@@ -12,27 +12,39 @@ import org.chocosolver.solver.variables.VariableFactory;
 
 public class Agent {
 
-    String Board;
-    Grid SudokuPuzzle;
+    const int SIZE = 9;
+    int[][] Board;
+    SudokuGrid SudokuPuzzle;
+
     Solver solver;
 
-    public Agent(String board){
+    public Agent(int[][] board){
         Board = board;
-        solver = new Solver("titties");
+        solver = new Solver("Big Titties");
+        SudokuPuzzle = new SudokuGrid(board);
+
+
     }
 
     public void Solver(){
-        Solver solver = new Solver("First problem");
-        IntVar[][] vs = VariableFactory.boundedMatrix("vs", 9, 9, 1, 9, solver);
+        IntVar[][] ripped = new IntVar[SIZE][SIZE];
+        IntVar[][] colons = new IntVar[SIZE][SIZE];
+        IntVar[][] boxing = new IntVar[SIZE][SIZE];
 
-        solver.post(IntConstraintFactory.arithm(x, "+", y, "<", 5));
-        // 8 // 4. Define the search strategy 9
-        solver.set(IntStrategyFactory.lexico_LB(x, y));
-        // 10 // 5. Launch the resolution process
-        solver.findSolution();
-        //6. Print search statistics 13
-        Chatterbox.printStatistics(solver);
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++) {
+                if(SudokuPuzzle.getCell(i,j) == 0){
+                    ripped[i][j] = VariableFactory.enumerated(i + ", " + j, 1, SIZE, solver);
+                }
+                else{
+                    ripped[i][j] = VariableFactory.fixed(SudokuPuzzle.getCell(i,j), solver);
+                }
+                colons[j][i] = ripped[i][j];
+            }
+        }
+
 
     }
+
 
 }
