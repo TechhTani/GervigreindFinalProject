@@ -1,17 +1,18 @@
+import java.util.ArrayList;
+
 /**
  * Created by Kristj�n on 1.4.2016.
  */
-import static org.chocosolver.solver.search.strategy.ISF.*;
-
-public class State {
+public class BruteState {
 
     /*
 	 * Map of suduko table
 	 */
 
-    int[][] sudukoTable = new int[9][9];
+    //Each cell contains value & possible values
+    BruteCell[][] sudukoTable = new BruteCell[9][9];
 
-    public State(int[][] sudukoTable){
+    public BruteState(BruteCell[][] sudukoTable){
         this.sudukoTable = sudukoTable;
     }
 
@@ -25,7 +26,15 @@ public class State {
         return false;
     }
 
-    public State getNextState(String action){
+    public ArrayList<BruteNode> legalMoves() {
+        return null;
+    }
+
+    public void forceRulesToCellsPossibleValues(){
+
+    }
+
+    public BruteState getNextState(String action){
         return null;
     }
 
