@@ -10,6 +10,8 @@ public class BruteForceAgent {
     BruteState baseState;
 
     public BruteForceAgent(int[][] board){
+        //Initialize the Cell array
+        this.board = new Cell[][]{};
 
         //Convert int[][] into Cell[][]
         for(int i = 0; i < SIZE; i++){
@@ -17,10 +19,6 @@ public class BruteForceAgent {
                 if(board[i][j] != 0){
                     this.board[i][j].possibleValues = new int[]{};
                     this.board[i][j].value = board[i][j];
-                }
-                else{
-                    this.board[i][j].possibleValues = new int[]{1,2,3,4,5,6,7,8,9};
-                    this.board[i][j].value = 0;
                 }
             }
         }
@@ -37,12 +35,19 @@ public class BruteForceAgent {
         }
 
         //Get next LEGAL moves? (if none then return)
-        ArrayList<BruteNode> possibleMoves = n.state.legalMoves();
+        ArrayList<BruteNode> legalMoves = n.state.legalMoves();
 
         //Start going through possible moves & search for solution
+        for(BruteNode nextMove : legalMoves){
             //Create new BruteNode with next move
+
             //Call bruteForce() function with new BruteNode
+            BruteNode answer = bruteForce(nextMove);
             //if Solution is found, return that BruteNode, else return NULL
+            if(answer != null)
+                return answer;
+        }
+
 
         return null;
     }
