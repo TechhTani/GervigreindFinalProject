@@ -56,8 +56,14 @@ public class Agent {
         	solver.post(IntConstraintFactory.alldifferent(colons[i], "DEFAULT"));
         	solver.post(IntConstraintFactory.alldifferent(boxing[i], "DEFAULT"));
         }
-        
-        solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(ripped)));
+
+        solver.set(IntStrategyFactory.minDom_LB(ArrayUtils.append(ripped)));
+        ///fingerscrossed
+        //solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(ripped)));
+        if(solver.findSolution()){
+            System.out.println("SolvedBitch");
+        }
+
     }
 
 }
