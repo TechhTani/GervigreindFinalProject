@@ -3,16 +3,15 @@
  */
 import org.chocosolver.solver.Solver;
 import static org.chocosolver.solver.search.strategy.ISF.*;
+import org.chocosolver.util.tools.ArrayUtils;
 import org.chocosolver.solver.constraints.IntConstraintFactory;
 import org.chocosolver.solver.search.strategy.IntStrategyFactory;
-import org.chocosolver.solver.trace.Chatterbox;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.VariableFactory;
-import org.chocosolver.util.tools.ArrayUtils;
+
 
 public class Agent {
-
-    const int SIZE = 9;
+    final int SIZE = 9;
     int[][] Board;
     SudokuGrid SudokuPuzzle;
 
@@ -22,10 +21,8 @@ public class Agent {
         Board = board;
         solver = new Solver("Big Titties");
         SudokuPuzzle = new SudokuGrid(board);
-
-
     }
-
+    
     public void Solver(){
 
         IntVar[][] ripped = new IntVar[SIZE][SIZE];
@@ -43,9 +40,24 @@ public class Agent {
                 colons[j][i] = ripped[i][j];
             }
         }
-
-
+        
+        for(int i = 0; i < 3; i++){
+        	for(int j = 0; j < 3; j++){
+        		for(int k = 0; k < 3; k++){
+        			boxing[j+k*3][i] = ripped[k*3][i+j*3];
+        			boxing[j+k*3][i+3] = ripped[1+k*3][i+j*3];
+        			boxing[j+k*3][i+6] = ripped[2+k*3][i+j*3];
+        		}
+    		}
+        }
+        
+        for(int i = 0; i < SIZE; i++){
+        	solver.post(IntConstraintFactory.alldifferent(ripped[i], "DEFAULT"));
+        	solver.post(IntConstraintFactory.alldifferent(colons[i], "DEFAULT"));
+        	solver.post(IntConstraintFactory.alldifferent(boxing[i], "DEFAULT"));
+        }
+        
+        solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(ripped)));
     }
-
 
 }
