@@ -2,12 +2,11 @@
  * Created by Kristj�n on 1.4.2016.
  */
 import org.chocosolver.solver.Solver;
-import static org.chocosolver.solver.search.strategy.ISF.*;
-import org.chocosolver.util.tools.ArrayUtils;
 import org.chocosolver.solver.constraints.IntConstraintFactory;
 import org.chocosolver.solver.search.strategy.IntStrategyFactory;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.VariableFactory;
+import org.chocosolver.util.tools.ArrayUtils;
 
 public class Agent {
     final int SIZE = 9;
@@ -55,8 +54,27 @@ public class Agent {
         	solver.post(IntConstraintFactory.alldifferent(boxing[i], "DEFAULT"));
         }
 
-        solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(ripped)));
+        //solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(ripped)));
+        solver.set(IntStrategyFactory.minDom_LB(ArrayUtils.append(ripped)));
+        if(solver.findSolution()){
+            System.out.println("Solving sudoku grid!\n\n");
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("\t");
+            for (int i = 0; i < SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    sb.append(ripped[i][j].getValue()).append("  ");
+                }
+                sb.append("\n\t");
+            }
+            System.out.println(sb.toString());
+
+        }
     }
+
+
+
 
 
     //Önnur aðferð til að setja í boxing
