@@ -8,7 +8,7 @@ import org.chocosolver.solver.search.strategy.IntStrategyFactory;
 import org.chocosolver.solver.trace.Chatterbox;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.VariableFactory;
-
+import org.chocosolver.util.tools.ArrayUtils;
 
 public class Agent {
 
@@ -27,6 +27,7 @@ public class Agent {
     }
 
     public void Solver(){
+
         IntVar[][] ripped = new IntVar[SIZE][SIZE];
         IntVar[][] colons = new IntVar[SIZE][SIZE];
         IntVar[][] boxing = new IntVar[SIZE][SIZE];
