@@ -2,10 +2,6 @@
  * Created by Kristj�n on 1.4.2016.
  */
 import org.chocosolver.solver.Solver;
-import static org.chocosolver.solver.search.strategy.ISF.*;
-import org.chocosolver.solver.constraints.IntConstraintFactory;
-import org.chocosolver.solver.search.strategy.IntStrategyFactory;
-import org.chocosolver.solver.trace.Chatterbox;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.VariableFactory;
 
