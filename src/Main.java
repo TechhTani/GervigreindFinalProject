@@ -9,7 +9,7 @@ public class Main {
 	public static int[][] readPuzzle() {
 		int[][] grid = new int[9][9];
 		
-		try(BufferedReader br = new BufferedReader(new FileReader("easy-puzzle.txt"))) {
+		try(BufferedReader br = new BufferedReader(new FileReader("diabolical-puzzle.txt"))) {
 	        String line = br.readLine();
 	        int counter = 0;
 	        while (line != null) {
@@ -40,7 +40,10 @@ public class Main {
 	    int[][] array = readPuzzle();
 
 		Agent a = new Agent(array);
+		
+		long startTime = System.currentTimeMillis();
 		a.Solver();
+		System.out.println("Solving took " + (System.currentTimeMillis() - startTime) + " ms");
 	}
     
 }
