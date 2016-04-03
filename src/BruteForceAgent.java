@@ -15,7 +15,7 @@ public class BruteForceAgent {
 
         //Convert int[][] into Cell[][]
         for(int i = 0; i < SIZE; i++){
-            for(int j = 0; i < SIZE; j++){
+            for(int j = 0; j < SIZE; j++){
                 if(board[i][j] != 0){
                     this.board[i][j].possibleValues = new int[]{};
                     this.board[i][j].value = board[i][j];
@@ -23,8 +23,8 @@ public class BruteForceAgent {
             }
         }
 
-        baseState = new BruteState(this.board);
-        baseState.forceRulesToCellsPossibleValues(); //Fixed the "possibleValues" array, so it only contains valid numbers
+        baseState = new BruteState(this.board, SIZE);
+        //Fixed the "possibleValues" array, so it only contains valid numbers
     }
 
     public BruteNode bruteForce(BruteNode n){

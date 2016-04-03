@@ -10,10 +10,12 @@ public class BruteState {
 	 */
 
     //Each cell contains value & possible values
-    Cell[][] sudukoTable = new Cell[9][9];
+    Cell[][] sudukoTable;
+    int SIZE;
 
-    public BruteState(Cell[][] sudukoTable){
+    public BruteState(Cell[][] sudukoTable, int SIZE){
         this.sudukoTable = sudukoTable;
+        this.SIZE = SIZE;
     }
 
     @Override
@@ -27,11 +29,37 @@ public class BruteState {
     }
 
     public ArrayList<BruteNode> legalMoves() {
+        //call sudukoRulesEnforce()
+        if(!sudukoRulesEnforce())
+            return null;
+
+        ArrayList<BruteState> newMoves = new ArrayList<BruteState>();
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                if(sudukoTable[i][j].value == 0){
+                    for(int item : sudukoTable[i][j].possibleValues){
+                        //Create new cell to add to ArrayList, then change "value" for empty cell (these are the next moves)
+                        Cell[][] newCell = sudukoTable;
+                        newCell[i][j].value = item;
+
+                        newMoves.add(new BruteState(newCell,SIZE));
+                    }
+                    break;
+                }
+            }
+        }
+
+        //No legal moves found (finished??)
         return null;
     }
 
-    public void forceRulesToCellsPossibleValues(){
+    public boolean sudukoRulesEnforce(){
+        //Enforce rules for suduko.
 
+        // 1. Go through each know value, and remove from domain
+
+
+        return false;
     }
 
     public BruteState getNextState(String action){
@@ -39,20 +67,26 @@ public class BruteState {
     }
 
     public boolean isGoal(){
-        return false;
+        //check if all cells have value (completed Suduko)
+
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                if(sudukoTable[i][j].value == 0)
+                    return false;
+            }
+        }
+
+        //then check if is valid
+        if(!sudukoRulesEnforce()){
+            return false;
+        }
+
+        //if true, then we found goal
+        return true;
     }
 
     public int evaluate(){
         return 0;
     }
-
-
-
-
-
-
-
-
-
 
 }
