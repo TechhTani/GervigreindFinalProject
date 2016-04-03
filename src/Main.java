@@ -9,7 +9,7 @@ public class Main {
 	public static int[][] readPuzzle() {
 		int[][] grid = new int[9][9];
 		
-		try(BufferedReader br = new BufferedReader(new FileReader("tough-puzzle.txt"))) {
+		try(BufferedReader br = new BufferedReader(new FileReader("easy-puzzle.txt"))) {
 	        String line = br.readLine();
 	        int counter = 0;
 	        while (line != null) {
@@ -37,8 +37,12 @@ public class Main {
 	 * main procedure
 	 */
 	public static void main(String[] args) throws Exception {
+
+
 	    int[][] array = readPuzzle();
 
+		//BruteForceAgent a = new BruteForceAgent(array);
+		//BruteState node = a.bruteForce(a.baseState);
 		CSPAgent a = new CSPAgent(array);
 		
 		long startTime = System.currentTimeMillis();
