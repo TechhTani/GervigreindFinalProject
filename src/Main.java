@@ -1,13 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-import org.chocosolver.solver.Solver;
-import org.chocosolver.solver.constraints.IntConstraintFactory;
-import org.chocosolver.solver.search.strategy.IntStrategyFactory;
-import org.chocosolver.solver.trace.Chatterbox;
-import org.chocosolver.solver.variables.IntVar;
-import org.chocosolver.solver.variables.VariableFactory;
-
 /**
  * Created by Kristjan on 1.4.2016.
  */
@@ -44,7 +37,14 @@ public class Main {
 	 * main procedure
 	 */
 	public static void main(String[] args) throws Exception {
-	    readPuzzle();
+
+
+		int[][] array = Generator.SudokuGen();
+
+	     /* int[][] array = readPuzzle();
+
+		Agent a = new Agent(array);
+		a.Solver();*/
 	}
     
 }

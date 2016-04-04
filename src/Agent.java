@@ -1,13 +1,12 @@
 /**
- * Created by Kristj�n on 1.4.2016.
+ * Created by Kristj�n on 1.4.2016.
  */
 import org.chocosolver.solver.Solver;
-import static org.chocosolver.solver.search.strategy.ISF.*;
-import org.chocosolver.util.tools.ArrayUtils;
 import org.chocosolver.solver.constraints.IntConstraintFactory;
 import org.chocosolver.solver.search.strategy.IntStrategyFactory;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.VariableFactory;
+import org.chocosolver.util.tools.ArrayUtils;
 
 
 public class Agent {
@@ -22,7 +21,7 @@ public class Agent {
         solver = new Solver("Big Titties");
         SudokuPuzzle = new SudokuGrid(board);
     }
-    
+
     public void Solver(){
 
         IntVar[][] ripped = new IntVar[SIZE][SIZE];
@@ -40,7 +39,7 @@ public class Agent {
                 colons[j][i] = ripped[i][j];
             }
         }
-        
+
         for(int i = 0; i < 3; i++){
         	for(int j = 0; j < 3; j++){
         		for(int k = 0; k < 3; k++){
@@ -50,20 +49,57 @@ public class Agent {
         		}
     		}
         }
-        
+
         for(int i = 0; i < SIZE; i++){
         	solver.post(IntConstraintFactory.alldifferent(ripped[i], "DEFAULT"));
         	solver.post(IntConstraintFactory.alldifferent(colons[i], "DEFAULT"));
         	solver.post(IntConstraintFactory.alldifferent(boxing[i], "DEFAULT"));
         }
 
-        solver.set(IntStrategyFactory.minDom_LB(ArrayUtils.append(ripped)));
-        ///fingerscrossed
+
         //solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(ripped)));
+        solver.set(IntStrategyFactory.minDom_LB(ArrayUtils.append(ripped)));
         if(solver.findSolution()){
-            System.out.println("SolvedBitch");
+            System.out.println("Solving sudoku grid!\n\n");
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("\t");
+            for (int i = 0; i < SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    sb.append(ripped[i][j].getValue()).append("  ");
+                }
+                sb.append("\n\t");
+            }
+            System.out.println(sb.toString());
+
         }
 
     }
 
+
+
+
+
+    //Önnur aðferð til að setja í boxing
+    //Method to populate Boxing #2
+    /*for(int i = 0; i < SIZE; i+=3){
+        for(int j = 0; j < SIZE; j++){
+            boxing[i][j] = ripped[0][i+j];
+            boxing[i][j+3] = ripped[1][i+j];
+            boxing[i][j+6] = ripped[2][i+j];
+
+            boxing[i+3][j] = ripped[3][i+j];
+            boxing[i+3][j+3] = ripped[4][i+j];
+            boxing[i+3][j+6] = ripped[5][i+j];
+
+            boxing[i+6][j] = ripped[6][i+j];
+            boxing[i+6][j+3] = ripped[7][i+j];
+            boxing[i+6][j+6] = ripped[8][i+j];
+        }
+    }*/
+
+
+
 }
+
