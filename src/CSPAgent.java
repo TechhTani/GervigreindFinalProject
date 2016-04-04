@@ -37,7 +37,7 @@ public class CSPAgent {
 			}
 		}
 		
-		printBoard();
+		//printBoard();
 	}
 	
 	private boolean checkDomain() {
@@ -70,17 +70,34 @@ public class CSPAgent {
 		
 	}
 	
-	private void printBoard() {
+	public void printBoard() {
 		StringBuilder sb = new StringBuilder();
+		int unknowns = 0;
 
         sb.append("\t");
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 sb.append(grid[i][j].value).append("  ");
+                if(grid[i][j].value == 0) {
+                	unknowns++;
+                }
             }
             sb.append("\n\t");
         }
         System.out.println(sb.toString());
+        System.out.println("Unknowns are " + unknowns);
+	}
+	
+	public int countUnknowns() {
+		int unknowns = 0;
+		for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(grid[i][j].value == 0) {
+                	unknowns++;
+                }
+            }
+        }
+		return unknowns;
 	}
 	
 	private boolean findHiddenSingles() {

@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 
 /**
@@ -6,10 +7,10 @@ import java.io.FileReader;
  */
 public class Main {
 	
-	public static int[][] readPuzzle() {
+	public static int[][] readPuzzle(String filename) {
 		int[][] grid = new int[9][9];
 		
-		try(BufferedReader br = new BufferedReader(new FileReader("tough-puzzle.txt"))) {
+		try(BufferedReader br = new BufferedReader(new FileReader("puzzles/" + filename))) {
 	        String line = br.readLine();
 	        int counter = 0;
 	        while (line != null) {
@@ -33,17 +34,36 @@ public class Main {
 		return grid;
     }
 	
+	
+	
 	/**
 	 * main procedure
 	 */
 	public static void main(String[] args) throws Exception {
-	    int[][] array = readPuzzle();
-
-		CSPAgent a = new CSPAgent(array);
+	    File folder = null;
+		try {
+			folder = new File("puzzles");
+		} catch(Exception e) {
+	    	System.out.println("Could not read folder");
+	    	e.printStackTrace();
+	    	System.exit(1);
+	    }
+		File[] listOfFiles = folder.listFiles();
 		
-		long startTime = System.currentTimeMillis();
-		a.solve();
-		System.out.println("Solving took " + (System.currentTimeMillis() - startTime) + " ms");
+		for(File f : listOfFiles) {
+			String filename = f.getName();
+			int[][] grid = readPuzzle(filename);
+			
+			CSPAgent a = new CSPAgent(grid);
+			//BruteForceAgent a = new BruteForceAgent(grid);
+			
+			long startTime = System.currentTimeMillis();
+			a.solve();
+			long endTime = System.currentTimeMillis();
+			//a.printBoard();
+			System.out.println(filename);
+			System.out.println(a.countUnknowns());
+			System.out.println("Solving took " + (endTime - startTime) + " ms");
+		}
 	}
-    
 }
