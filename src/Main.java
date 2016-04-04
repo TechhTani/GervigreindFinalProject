@@ -39,12 +39,16 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 
-		int[][] array = Generator.SudokuGen();
+	    int[][] array = readPuzzle();
 
-	     /* int[][] array = readPuzzle();
+		//BruteForceAgent a = new BruteForceAgent(array);
+		//BruteState node = a.bruteForce(a.baseState);
+		CSPAgent a = new CSPAgent(array);
+		
+		long startTime = System.currentTimeMillis();
+		a.solve();
+		System.out.println("Solving took " + (System.currentTimeMillis() - startTime) + " ms");
 
-		Agent a = new Agent(array);
-		a.Solver();*/
 	}
     
 }

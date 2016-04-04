@@ -1,5 +1,5 @@
 /**
- * Created by Kristján on 2.4.2016.
+ * Created by Kristjï¿½n on 2.4.2016.
  */
 import java.util.Random;
 
@@ -23,7 +23,29 @@ public class Generator {
 
         return newBoard;
     }
-    public static int[][] getFullBoard(int[][] theBoard){
+    public static int[][] getFullBoard(int [][] theBoard){
+        Random rand = new Random();
+        Boolean puzzleFound = false;
+        int numbersonboard = 0;
+        while(!puzzleFound){
+            int numberOfClues = 0;
+            while(numberOfClues < 17) {
+                int randomX = rand.nextInt(9);
+                int randomY = rand.nextInt(9);
+                int randomValue = rand.nextInt((9 - 1) + 1) + 1;
+                if (theBoard[randomX][randomY] == 0) {
+                    theBoard[randomX][randomY] = randomValue;
+                    numberOfClues += 1;
+                }
+            }
+            CSPAgent tester = new CSPAgent(theBoard);
+            if(tester.solve()){
+                puzzleFound = true;
+            }
+        }
+        return theBoard;
+    }
+    /*public static int[][] getFullBoard(int[][] theBoard){
         Random rand = new Random();
         Boolean uniqueFound = false;
         int counter = 0;
@@ -51,7 +73,7 @@ public class Generator {
         }
         System.out.println("iterations:" + counter);
         return theBoard;
-    }
+    }*/
     public static void Printer(int[][] printBoard){
         StringBuilder sb = new StringBuilder();
 
@@ -73,46 +95,6 @@ public class Generator {
             }
         }
         return true;
-    }
-    public static Solver generatingSolver(int[][] checkBoard){
-
-
-        Solver solver = new Solver();
-        SudokuGrid SudokuPuzzle = new SudokuGrid(checkBoard);
-        int SIZE = 9;
-        IntVar[][] ripped = new IntVar[SIZE][SIZE];
-        IntVar[][] colons = new IntVar[SIZE][SIZE];
-        IntVar[][] boxing = new IntVar[SIZE][SIZE];
-
-        for(int i = 0; i < SIZE; i++){
-            for(int j = 0; j < SIZE; j++) {
-                if(SudokuPuzzle.getCell(i,j) == 0){
-                    ripped[i][j] = VariableFactory.enumerated(i + ", " + j, 1, SIZE, solver);
-                }
-                else{
-                    ripped[i][j] = VariableFactory.fixed(SudokuPuzzle.getCell(i,j), solver);
-                }
-                colons[j][i] = ripped[i][j];
-            }
-        }
-
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                for(int k = 0; k < 3; k++){
-                    boxing[j+k*3][i] = ripped[k*3][i+j*3];
-                    boxing[j+k*3][i+3] = ripped[1+k*3][i+j*3];
-                    boxing[j+k*3][i+6] = ripped[2+k*3][i+j*3];
-                }
-            }
-        }
-
-        for(int i = 0; i < SIZE; i++){
-            solver.post(IntConstraintFactory.alldifferent(ripped[i], "DEFAULT"));
-            solver.post(IntConstraintFactory.alldifferent(colons[i], "DEFAULT"));
-            solver.post(IntConstraintFactory.alldifferent(boxing[i], "DEFAULT"));
-        }
-        solver.set(IntStrategyFactory.minDom_LB(ArrayUtils.append(ripped)));
-        return solver;
     }
 
 }
