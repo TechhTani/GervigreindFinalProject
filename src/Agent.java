@@ -8,6 +8,7 @@ import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.VariableFactory;
 import org.chocosolver.util.tools.ArrayUtils;
 
+
 public class Agent {
     final int SIZE = 9;
     int[][] Board;
@@ -54,6 +55,7 @@ public class Agent {
         	solver.post(IntConstraintFactory.alldifferent(boxing[i], "DEFAULT"));
         }
 
+
         //solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(ripped)));
         solver.set(IntStrategyFactory.minDom_LB(ArrayUtils.append(ripped)));
         if(solver.findSolution()){
@@ -71,6 +73,7 @@ public class Agent {
             System.out.println(sb.toString());
 */
         }
+
     }
 
     public int countUnknowns() {

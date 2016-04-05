@@ -66,6 +66,7 @@ public class Main {
 	    }
 		File[] listOfFiles = folder.listFiles();
 		/*
+		// Only one puzzle
 		CSPAgent a = new CSPAgent(readPuzzle("deathBlossom-puzzle.txt"));
 		//BruteForceAgent a = new BruteForceAgent(grid);
 		//BruteState node = a.bruteForce(a.baseState);
@@ -79,11 +80,14 @@ public class Main {
 		System.out.println("Solving took " + (endTime - startTime) + " ms");
 		System.out.println("");
 		*/
+		
+		// All puzzles
 		for(File f : listOfFiles) {
 			String filename = f.getName();
 			int[][] grid = readPuzzle(filename);
 			
 			Agent a = new Agent(grid);
+			//CSPAgent a = new Agent(grid);
 			//BruteForceAgent a = new BruteForceAgent(grid);
 			//BruteState node = a.bruteForce(a.baseState);
 			
