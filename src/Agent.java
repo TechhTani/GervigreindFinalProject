@@ -12,6 +12,9 @@ public class Agent {
     final int SIZE = 9;
     int[][] Board;
     SudokuGrid SudokuPuzzle;
+    IntVar[][] ripped = new IntVar[SIZE][SIZE];
+    IntVar[][] colons = new IntVar[SIZE][SIZE];
+    IntVar[][] boxing = new IntVar[SIZE][SIZE];
 
     Solver solver;
 
@@ -21,10 +24,7 @@ public class Agent {
         SudokuPuzzle = new SudokuGrid(board);
     }
 
-    public void Solver(){
-        IntVar[][] ripped = new IntVar[SIZE][SIZE];
-        IntVar[][] colons = new IntVar[SIZE][SIZE];
-        IntVar[][] boxing = new IntVar[SIZE][SIZE];
+    public void solve(){
 
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++) {
@@ -57,7 +57,7 @@ public class Agent {
         //solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(ripped)));
         solver.set(IntStrategyFactory.minDom_LB(ArrayUtils.append(ripped)));
         if(solver.findSolution()){
-            System.out.println("Solving sudoku grid!\n\n");
+        	/*           System.out.println("Solving sudoku grid!\n\n");
 
             StringBuilder sb = new StringBuilder();
 
@@ -69,10 +69,21 @@ public class Agent {
                 sb.append("\n\t");
             }
             System.out.println(sb.toString());
-
+*/
         }
     }
 
+    public int countUnknowns() {
+		int unknowns = 0;
+		for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(ripped[i][j].getValue() == 0) {
+                	unknowns++;
+                }
+            }
+        }
+		return unknowns;
+	}
 
 
 

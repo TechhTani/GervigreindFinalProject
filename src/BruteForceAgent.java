@@ -11,44 +11,51 @@ public class BruteForceAgent {
 
     public BruteForceAgent(int[][] board){
         //Initialize the Cell array
-        this.board = new Cell[][]{};
+        this.board = new Cell[SIZE][SIZE];
 
         //Convert int[][] into Cell[][]
         for(int i = 0; i < SIZE; i++){
-            for(int j = 0; i < SIZE; j++){
+            for(int j = 0; j < SIZE; j++){
                 if(board[i][j] != 0){
+                    this.board[i][j] = new Cell();
                     this.board[i][j].possibleValues = new int[]{};
                     this.board[i][j].value = board[i][j];
+                }
+                else{
+                    this.board[i][j] = new Cell();
                 }
             }
         }
 
-        baseState = new BruteState(this.board);
-        baseState.forceRulesToCellsPossibleValues(); //Fixed the "possibleValues" array, so it only contains valid numbers
+        baseState = new BruteState(this.board, SIZE);
+        //Fixed the "possibleValues" array, so it only contains valid numbers
     }
 
-    public BruteNode bruteForce(BruteNode n){
+    public BruteState bruteForce(BruteState state){
 
         //Check if goal? (completed without rule break)
-        if(n.state.isGoal()){
-            return n;
+        if(state.isGoal()){
+            return state;
         }
 
         //Get next LEGAL moves? (if none then return)
-        ArrayList<BruteNode> legalMoves = n.state.legalMoves();
+        ArrayList<BruteState> legalMoves = state.legalMoves();
+
+        if(legalMoves == null) //no legal moves found (INVALID SUDOKU STATE)
+            return null;
 
         //Start going through possible moves & search for solution
-        for(BruteNode nextMove : legalMoves){
+        for(BruteState nextMove : legalMoves){
             //Create new BruteNode with next move
 
             //Call bruteForce() function with new BruteNode
-            BruteNode answer = bruteForce(nextMove);
+            BruteState answer = bruteForce(nextMove);
             //if Solution is found, return that BruteNode, else return NULL
             if(answer != null)
                 return answer;
         }
 
-
+        //no answers found for this state.
         return null;
     }
 

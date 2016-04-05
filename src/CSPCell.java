@@ -19,6 +19,11 @@ public class CSPCell {
 		domain.add(9);
 	}
 	
+	public CSPCell(int value, LinkedList<Integer> domain) {
+		this.value = value;
+		this.domain = (LinkedList<Integer>) domain.clone();
+	}
+	
 	public int domainSize() {
 		return domain.size();
 	}

@@ -1,7 +1,10 @@
+import java.util.Stack;
+
 
 public class CSPAgent {
 	final int SIZE = 9;
 	private CSPCell[][] grid;
+	private Stack<CSPCell[][]> stack = new Stack<>();
 	
 	
 	public CSPAgent(int[][] board) {
@@ -27,13 +30,15 @@ public class CSPAgent {
 		
 	}
 	
-	public void solve() {
+	public void solve() {	
 		boolean doContinue = true;
 		while(doContinue) {
 			if(!checkDomain()) {
-				if(!findHiddenSingles()) {
-					doContinue = false;
-				}
+				//if(!findHiddenSingles()) {
+					if(!guess()) {
+						doContinue = false;
+					}					
+				//}
 			}
 		}
 		
@@ -171,5 +176,48 @@ public class CSPAgent {
 		}
 		
 		return foundSingle;
+	}
+	
+	private boolean guess() {
+		// Look for error because of wrong guess or unsolvable puzzle
+		for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(grid[i][j].value == 0 && grid[i][j].domain.isEmpty()) {
+                	// Found error try backtracking
+                	if(stack.isEmpty()) {
+                		// Unsolvable
+                		return false;
+                	} else {
+                		grid = stack.pop();
+                		return true;
+                	}
+                }
+            }
+        }
+		for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(grid[i][j].value == 0 && !grid[i][j].domain.isEmpty()) {
+                	int value = grid[i][j].domain.pop().intValue();
+                	
+                	CSPCell[][] tmpGrid = new CSPCell[SIZE][SIZE];
+                	for (int k = 0; k < SIZE; k++) {
+                        for (int l = 0; l < SIZE; l++) {
+                        	CSPCell c = grid[k][l];
+                            tmpGrid[k][l] = new CSPCell(c.value, c.domain);
+                        }
+                    }
+                	
+                	stack.push(tmpGrid);
+                	
+                	
+                	grid[i][j].value = value;
+                	grid[i][j].domain.clear();
+                	updateDomain(i, j, value);
+                	return true;
+                }
+            }
+        }
+		return false;
+
 	}
 }
