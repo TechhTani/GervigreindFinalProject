@@ -1,13 +1,9 @@
-/**
- * Created by Kristj�n on 1.4.2016.
- */
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.constraints.IntConstraintFactory;
 import org.chocosolver.solver.search.strategy.IntStrategyFactory;
 import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.solver.variables.VariableFactory;
 import org.chocosolver.util.tools.ArrayUtils;
-
 
 public class Agent {
     final int SIZE = 9;

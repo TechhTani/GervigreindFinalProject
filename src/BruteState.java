@@ -147,7 +147,7 @@ public class BruteState {
         if(!checkIfSudokuIsValid()){
             return false;
         }
-
+/*
         //PRINT
         System.out.println("Solving sudoku grid!\n\n");
         StringBuilder sb = new StringBuilder();
@@ -159,7 +159,7 @@ public class BruteState {
             sb.append("\n\t");
         }
         System.out.println(sb.toString());
-
+*/
         //if true, then we found goal
         return true;
     }
