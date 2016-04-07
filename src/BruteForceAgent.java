@@ -31,6 +31,14 @@ public class BruteForceAgent {
         //Fixed the "possibleValues" array, so it only contains valid numbers
     }
 
+    public boolean solve(){
+        BruteState answer = bruteForce(baseState);
+        if(answer == null)
+            return false;
+        //answer.printBoard();
+        return true;
+    }
+
     public BruteState bruteForce(BruteState state){
 
         //Check if goal? (completed without rule break)

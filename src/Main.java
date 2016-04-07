@@ -70,11 +70,9 @@ public class Main {
 			//Agent a = new Agent(grid);
 			CSPAgent a = new CSPAgent(readPuzzle("unsolvable-puzzle.txt"));
 			//BruteForceAgent a = new BruteForceAgent(readPuzzle("db.txt"));
-			//BruteState node = a.bruteForce(a.baseState);
 			
 			long startTime = System.currentTimeMillis();
 			a.solve();
-			//BruteState nodeA = a.bruteForce(a.baseState);
 			long endTime = System.currentTimeMillis();
 			//a.printBoard();
 			
@@ -90,15 +88,13 @@ public class Main {
 			String filename = f.getName();
 			int[][] grid = readPuzzle(filename);
 			long time = 0;
-			for(int i= 0; i < 100; i++) {
+			for(int i= 0; i < 1; i++) {
 				//Agent a = new Agent(grid);
-				CSPAgent a = new CSPAgent(grid);
-				//BruteForceAgent a = new BruteForceAgent(grid);
-				//BruteState node = a.bruteForce(a.baseState);
+				//CSPAgent a = new CSPAgent(grid);
+				BruteForceAgent a = new BruteForceAgent(grid);
 				
 				long startTime = System.currentTimeMillis();
 				a.solve();
-				//BruteState nodeA = a.bruteForce(a.baseState);
 				long endTime = System.currentTimeMillis();
 				//a.printBoard();
 				time += (endTime - startTime);
