@@ -2,13 +2,6 @@
  * Created by Kristj�n on 2.4.2016.
  */
 import java.util.Random;
-
-import org.chocosolver.solver.Solver;
-import org.chocosolver.solver.constraints.IntConstraintFactory;
-import org.chocosolver.solver.search.strategy.IntStrategyFactory;
-import org.chocosolver.solver.variables.IntVar;
-import org.chocosolver.solver.variables.VariableFactory;
-import org.chocosolver.util.tools.ArrayUtils;
 public class Generator {
 
 
@@ -38,7 +31,8 @@ public class Generator {
                     numberOfClues += 1;
                 }
             }
-            CSPAgent tester = new CSPAgent(theBoard);
+            //CSPAgent tester = new CSPAgent(theBoard);
+            BruteForceAgent tester = new BruteForceAgent(theBoard);
             if(tester.solve()){
                 puzzleFound = true;
             }

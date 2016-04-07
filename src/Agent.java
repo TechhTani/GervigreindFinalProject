@@ -104,8 +104,5 @@ public class Agent {
             boxing[i+6][j+6] = ripped[8][i+j];
         }
     }*/
-
-
-
 }
 

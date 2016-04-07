@@ -92,8 +92,8 @@ public class Main {
 			long time = 0;
 			for(int i= 0; i < 100; i++) {
 				//Agent a = new Agent(grid);
-				CSPAgent a = new CSPAgent(grid);
-				//BruteForceAgent a = new BruteForceAgent(grid);
+				//CSPAgent a = new CSPAgent(grid);
+				BruteForceAgent a = new BruteForceAgent(grid);
 				//BruteState node = a.bruteForce(a.baseState);
 				
 				long startTime = System.currentTimeMillis();
