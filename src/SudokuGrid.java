@@ -1,4 +1,3 @@
-
 public class SudokuGrid {
 
     int[][] Grid;

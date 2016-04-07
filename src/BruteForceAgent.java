@@ -1,8 +1,5 @@
 import java.util.ArrayList;
 
-/**
- * Created by Natan on 02.04.2016.
- */
 public class BruteForceAgent {
 
     final int SIZE = 9;

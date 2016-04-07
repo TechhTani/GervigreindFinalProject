@@ -89,9 +89,9 @@ public class Main {
 			int[][] grid = readPuzzle(filename);
 			long time = 0;
 			for(int i= 0; i < 1; i++) {
-				//Agent a = new Agent(grid);
+				Agent a = new Agent(grid);
 				//CSPAgent a = new CSPAgent(grid);
-				BruteForceAgent a = new BruteForceAgent(grid);
+				//BruteForceAgent a = new BruteForceAgent(grid);
 				
 				long startTime = System.currentTimeMillis();
 				a.solve();
