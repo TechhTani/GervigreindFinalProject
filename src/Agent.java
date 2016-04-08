@@ -87,7 +87,7 @@ public class Agent {
         }
 
 
-        //solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(ripped)));
+        //solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(rows)));
         solver.set(IntStrategyFactory.minDom_LB(ArrayUtils.append(rows)));
         solver.findSolution();
         return solver.nextSolution();

@@ -43,6 +43,8 @@ public class Main {
 
 	    } catch(Exception e) {
 	    	System.out.println("Could not read puzzle");
+	    	e.printStackTrace();
+	    	System.exit(1);
 	    }
 		
 		return grid;
@@ -54,31 +56,46 @@ public class Main {
 	 * main procedure
 	 */
 	public static void main(String[] args) throws Exception {
-		int[][] grid = new int[9][9];
-		System.out.println("Welcome To The Sudou Solver!");
-		System.out.println("Input 1 for Bruteforce");
-		System.out.println("Input 2 for Internal CSP");
-		System.out.println("Input 3 for External CSP");
-		Scanner solver = new Scanner(System.in);
-		String puzzle = solver.nextLine();
-		if(!puzzle.equals("1") && !puzzle.equals("2") && !puzzle.equals("3")) {
-			System.out.println("wrong input please run again");
+		int[][] grid;
+		Scanner in = new Scanner(System.in);
+		
+		int solver = pickSolver(in);
+		
+		if(solver != 1 && solver != 2 && solver != 3) {
+			System.out.println("Wrong input please run again");
 			return;
 		}
 		
-		System.out.println("You are doing a great job! Now pick a puzzle to solve! "
-				+ "(The puzzles are in the puzzle folder in the projects direcotry)");
-		System.out.println("Example: diabotical-puzzle.txt");
-		System.out.println("type 0 to solve all puzzles");
+		String puzzle = pickPuzzle(in);
 		
-		Scanner file = new Scanner(System.in);
 		
-		String fileName = file.nextLine();
-		if(fileName.equals("generate")){
-			/*-------Generator stuff-------*/
-		    // int[][] tester = Generator.SudokuGen();
-			int[][] tester = Generator.SudokuGen();
-		}else if(fileName.equals("0")) {
+		if(puzzle.equals("generate")){
+			grid = Generator.SudokuGen();
+			Generator.Printer(grid);
+			long startTime, endTime;
+			
+			if(solver == 1) {
+				BruteForceAgent a = new BruteForceAgent(grid);
+				startTime = System.currentTimeMillis();
+				a.solve();
+				endTime = System.currentTimeMillis();
+			} else if (solver == 2){
+				CSPAgent a = new CSPAgent(grid);
+				startTime = System.currentTimeMillis();
+				a.solve();
+				endTime = System.currentTimeMillis();
+				a.printBoard();
+			} else {
+				Agent a = new Agent(grid);
+				startTime = System.currentTimeMillis();
+				a.solve();
+				endTime = System.currentTimeMillis();
+				a.printBoard();
+			}
+			
+			System.out.println("Solving took " + (endTime - startTime) + " ms");
+			System.out.println("");
+		} else if(puzzle.equals("0")) {
 			File folder = null;
 			try {
 				folder = new File("puzzles");
@@ -94,41 +111,40 @@ public class Main {
 				grid = readPuzzle(filename);
 				long time = 0;
 				long startTime, endTime;
-				for(int i= 0; i < 1; i++) {
-					if(puzzle.equals("1")) {
-						BruteForceAgent a = new BruteForceAgent(grid);
-						startTime = System.currentTimeMillis();
-						a.solve();
-						endTime = System.currentTimeMillis();
-					} else if (puzzle.equals("2")){
-						CSPAgent a = new CSPAgent(grid);
-						startTime = System.currentTimeMillis();
-						a.solve();
-						endTime = System.currentTimeMillis();
-					} else {
-						Agent a = new Agent(grid);
-						startTime = System.currentTimeMillis();
-						a.solve();
-						endTime = System.currentTimeMillis();
-					}
-					//a.printBoard();
-					time += (endTime - startTime);
+				if(solver == 1) {
+					BruteForceAgent a = new BruteForceAgent(grid);
+					startTime = System.currentTimeMillis();
+					a.solve();
+					endTime = System.currentTimeMillis();
+				} else if (solver == 2){
+					CSPAgent a = new CSPAgent(grid);
+					startTime = System.currentTimeMillis();
+					a.solve();
+					endTime = System.currentTimeMillis();
+				} else {
+					Agent a = new Agent(grid);
+					startTime = System.currentTimeMillis();
+					a.solve();
+					endTime = System.currentTimeMillis();
 				}
+				
+				time += (endTime - startTime);
+
 				System.out.println(filename);
 				//a.debug();
-				System.out.println("Solving took " + (time / 100.0) + " ms");
+				System.out.println("Solving took " + time + " ms");
 				System.out.println("");
 			}
 		} else {
 			// Only one puzzle
-			grid = readPuzzle(fileName);
+			grid = readPuzzle(puzzle);
 			long startTime, endTime;
-			if(puzzle.equals("1")) {
+			if(solver == 1) {
 				BruteForceAgent a = new BruteForceAgent(grid);
 				startTime = System.currentTimeMillis();
 				a.solve();
 				endTime = System.currentTimeMillis();
-			} else if (puzzle.equals("2")){
+			} else if(solver == 2){
 				CSPAgent a = new CSPAgent(grid);
 				startTime = System.currentTimeMillis();
 				a.solve();
@@ -141,9 +157,34 @@ public class Main {
 				endTime = System.currentTimeMillis();
 				a.printBoard();
 			}
-			System.out.println(fileName + "-puzzle.txt");
+			System.out.println(puzzle);
 			System.out.println("Solving took " + (endTime - startTime) + " ms");
 			System.out.println("");
-			}
+		}
+	}
+	
+	private static int pickSolver(Scanner in) {
+		System.out.println("Welcome To The Sudou Solver!");
+		System.out.println("Input 1 for Bruteforce");
+		System.out.println("Input 2 for Internal CSP");
+		System.out.println("Input 3 for External CSP");
+		//Scanner in = new Scanner(System.in);
+		String solver = in.nextLine();
+		//in.close();
+		
+		return Integer.parseInt(solver);
+	}
+	
+	private static String pickPuzzle(Scanner in) {
+		System.out.println("You are doing a great job! Now pick a puzzle to solve! "
+				+ "(The puzzles are in the puzzle folder in the projects directory)");
+		System.out.println("Example: diabotical-puzzle.txt");
+		System.out.println("You can also type 0 to solve all puzzles or generate to generate a puzzle");
+		
+		//Scanner in = new Scanner(System.in);
+		String file = in.nextLine();
+		in.close();
+		
+		return file;
 	}
 }

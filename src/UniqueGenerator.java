@@ -1,10 +1,5 @@
-import org.chocosolver.solver.search.strategy.IntStrategyFactory;
 import org.chocosolver.solver.variables.IntVar;
-import org.chocosolver.util.tools.ArrayUtils;
 
-/**
- * Created by Kristj�n on 5.4.2016.
- */
 public class UniqueGenerator {
 
     public static int[][] UniqueSudokuGen(){
@@ -19,10 +14,10 @@ public class UniqueGenerator {
             Boolean singleSolution = initialSolver.solutionChecker();
 
             if(singleSolution){
-                System.out.println("multiple");
+                //System.out.println("multiple");
             }
             else{
-                System.out.println("single");
+                //System.out.println("single");
                 fuck = true;
             }
 
@@ -30,6 +25,7 @@ public class UniqueGenerator {
         return newBoard;
 
     }
+    
     public static void printer(IntVar[][] printBoard){
         StringBuilder sb = new StringBuilder();
 
@@ -48,7 +44,4 @@ public class UniqueGenerator {
         }
         System.out.println(sb.toString());
     }
-
-
-
 }

@@ -1,20 +1,16 @@
-/**
- * Created by Kristj�n on 2.4.2016.
- */
 import java.util.Random;
 
 public class Generator {
 
-
-
     public static int[][] SudokuGen(){
         int[][] newBoard = new int[9][9];
-        System.out.print("Getting board....");
+        //System.out.print("Getting board....");
         newBoard = getFullBoard(newBoard);
 
-        System.out.print("check!\n");
+        //System.out.print("check!\n");
         return newBoard;
     }
+    
     public static int[][] getFullBoard(int [][] theBoard){
         Random rand = new Random();
         Boolean puzzleFound = false;
@@ -40,6 +36,7 @@ public class Generator {
         }
         return theBoard;
     }
+    
     public static void Printer(int[][] printBoard){
         StringBuilder sb = new StringBuilder();
 
@@ -58,6 +55,7 @@ public class Generator {
         }
         System.out.println(sb.toString());
     }
+    
     public static boolean isFilled(int[][] checkBoard){
         for(int i = 0; i < 9; i++){
             for(int j = 0 ; j < 9 ; j++){
@@ -68,5 +66,4 @@ public class Generator {
         }
         return true;
     }
-
 }
