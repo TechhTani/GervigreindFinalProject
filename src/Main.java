@@ -61,6 +61,10 @@ public class Main {
 		System.out.println("Input 3 for External CSP");
 		Scanner solver = new Scanner(System.in);
 		String puzzle = solver.nextLine();
+		if(!puzzle.equals("1") && !puzzle.equals("2") && !puzzle.equals("3")) {
+			System.out.println("wrong input please run again");
+			return;
+		}
 		
 		System.out.println("You are doing a great job! Now pick a puzzle to solve! "
 				+ "(The puzzles are in the puzzle folder in the projects direcotry)");
@@ -125,7 +129,6 @@ public class Main {
 				a.solve();
 				endTime = System.currentTimeMillis();
 			} else if (puzzle.equals("2")){
-				System.out.println("supdoge");
 				CSPAgent a = new CSPAgent(grid);
 				startTime = System.currentTimeMillis();
 				a.solve();
