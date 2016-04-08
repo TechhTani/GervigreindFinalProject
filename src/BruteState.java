@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Kristj�n on 1.4.2016.
- */
 public class BruteState {
 
     /*
@@ -148,20 +145,25 @@ public class BruteState {
             return false;
         }
 
-        //PRINT
-        System.out.println("Solving sudoku grid!\n\n");
+        return true;
+    }
+
+    public void printBoard() {
         StringBuilder sb = new StringBuilder();
+        int unknowns = 0;
+
         sb.append("\t");
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 sb.append(sudokuTable[i][j].value).append("  ");
+                if(sudokuTable[i][j].value == 0) {
+                    unknowns++;
+                }
             }
             sb.append("\n\t");
         }
         System.out.println(sb.toString());
-
-        //if true, then we found goal
-        return true;
+        System.out.println("Unknowns are " + unknowns);
     }
 
 }

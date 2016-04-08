@@ -1,6 +1,3 @@
-/**
- * Created by Natan on 01.04.2016.
- */
 public class Cell {
 
     public int value;

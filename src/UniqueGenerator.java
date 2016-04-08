@@ -3,7 +3,7 @@ import org.chocosolver.solver.variables.IntVar;
 import org.chocosolver.util.tools.ArrayUtils;
 
 /**
- * Created by Kristján on 5.4.2016.
+ * Created by Kristjï¿½n on 5.4.2016.
  */
 public class UniqueGenerator {
 
@@ -13,13 +13,11 @@ public class UniqueGenerator {
         Boolean fuck = false;
         while(!fuck) {
             newBoard = Generator.SudokuGen();
-            //solve that board with CSP agent
-            //System.out.println("Board generated");
+
             Agent initialSolver = new Agent(newBoard);
-            //System.out.println("Attempting Solving");
+
             Boolean singleSolution = initialSolver.solutionChecker();
-            //System.out.println("Solver ran")
-            //Boolean checker = initialSolver.solver.findSolution();
+
             if(singleSolution){
                 System.out.println("multiple");
             }
@@ -28,7 +26,6 @@ public class UniqueGenerator {
                 fuck = true;
             }
 
-            //System.out.println("Bye");
         }
         return newBoard;
 
@@ -51,9 +48,7 @@ public class UniqueGenerator {
         }
         System.out.println(sb.toString());
     }
-    /*public int[][] generator(int[][] theBoard){
 
-    }*/
 
 
 }

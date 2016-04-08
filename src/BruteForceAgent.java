@@ -1,8 +1,5 @@
 import java.util.ArrayList;
 
-/**
- * Created by Natan on 02.04.2016.
- */
 public class BruteForceAgent {
 
     final int SIZE = 9;
@@ -29,6 +26,14 @@ public class BruteForceAgent {
 
         baseState = new BruteState(this.board, SIZE);
         //Fixed the "possibleValues" array, so it only contains valid numbers
+    }
+
+    public boolean solve(){
+        BruteState answer = bruteForce(baseState);
+        if(answer == null)
+            return false;
+        //answer.printBoard();
+        return true;
     }
 
     public BruteState bruteForce(BruteState state){

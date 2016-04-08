@@ -2,9 +2,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-/**
- * Created by Kristjan on 1.4.2016.
- */
 public class Main {
 	
 	public static int[][] readPuzzle(String filename) {
@@ -58,7 +55,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 	    /*-------Generator stuff-------*/
 	   // int[][] tester = Generator.SudokuGen();
-		int[][] tester = UniqueGenerator.UniqueSudokuGen();
+		int[][] tester = Generator.SudokuGen();
 
 
 	    /*------CSP stuff--------
@@ -71,6 +68,7 @@ public class Main {
 	    	System.exit(1);
 	    }
 		File[] listOfFiles = folder.listFiles();
+<<<<<<< HEAD
 		*/
 		/*
 		// Only one puzzle
@@ -97,16 +95,54 @@ public class Main {
 			//CSPAgent a = new Agent(grid);
 			//BruteForceAgent a = new BruteForceAgent(grid);
 			//BruteState node = a.bruteForce(a.baseState);
+=======
+		
+		/*
+		// Only one puzzle
+		long time = 0;
+		for(int i= 0; i < 100; i++) {
+			//Agent a = new Agent(grid);
+			CSPAgent a = new CSPAgent(readPuzzle("unsolvable-puzzle.txt"));
+			//BruteForceAgent a = new BruteForceAgent(readPuzzle("db.txt"));
+>>>>>>> f1f23571b12d6356ceb8bdc7981bf92370ae5a42
 			
 			long startTime = System.currentTimeMillis();
 			a.solve();
 			long endTime = System.currentTimeMillis();
 			//a.printBoard();
+			
+			//a.debug();
+			
+			time += (endTime - startTime);
+		}
+		System.out.println("Solving took " + (time / 100.0) + " ms");
+		//*/
+		
+		// All puzzles
+		/*
+		for(File f : listOfFiles) {
+			String filename = f.getName();
+			int[][] grid = readPuzzle(filename);
+			long time = 0;
+			for(int i= 0; i < 1; i++) {
+				Agent a = new Agent(grid);
+				//CSPAgent a = new CSPAgent(grid);
+				//BruteForceAgent a = new BruteForceAgent(grid);
+				
+				long startTime = System.currentTimeMillis();
+				a.solve();
+				long endTime = System.currentTimeMillis();
+				//a.printBoard();
+				time += (endTime - startTime);
+			}
 			System.out.println(filename);
-			System.out.println("Unknowns are : " + a.countUnknowns());
-			System.out.println("Solving took " + (endTime - startTime) + " ms");
+			//a.debug();
+			System.out.println("Solving took " + (time / 100.0) + " ms");
 			System.out.println("");
-		}*/
+*/
+			
+		}
+
 		//*/
 	}
-}
+

@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.LinkedList;
 
 public class CSPCell {
 	public int value;
