@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Scanner;
 
 public class Main {
 	
@@ -53,96 +54,93 @@ public class Main {
 	 * main procedure
 	 */
 	public static void main(String[] args) throws Exception {
-	    /*-------Generator stuff-------*/
-	   // int[][] tester = Generator.SudokuGen();
-		int[][] tester = Generator.SudokuGen();
-
-
-	    /*------CSP stuff--------
-		File folder = null;
-		try {
-			folder = new File("puzzles");
-		} catch(Exception e) {
-	    	System.out.println("Could not read folder");
-	    	e.printStackTrace();
-	    	System.exit(1);
-	    }
-		File[] listOfFiles = folder.listFiles();
-<<<<<<< HEAD
-		*/
-		/*
-		// Only one puzzle
-		CSPAgent a = new CSPAgent(readPuzzle("deathBlossom-puzzle.txt"));
-		//BruteForceAgent a = new BruteForceAgent(grid);
-		//BruteState node = a.bruteForce(a.baseState);
+		int[][] grid = new int[9][9];
+		System.out.println("Welcome To The Sudou Solver!");
+		System.out.println("Input 1 for Bruteforce");
+		System.out.println("Input 2 for Internal CSP");
+		System.out.println("Input 3 for External CSP");
+		Scanner solver = new Scanner(System.in);
+		String puzzle = solver.nextLine();
 		
-		long startTime = System.currentTimeMillis();
-		a.solve();
-		long endTime = System.currentTimeMillis();
-		a.printBoard();
-		System.out.println("deathBlossom-puzzle.txt");
-		System.out.println("Unknowns are : " + a.countUnknowns());
-		System.out.println("Solving took " + (endTime - startTime) + " ms");
-		System.out.println("");
-		*/
+		System.out.println("You are doing a great job! Now pick a puzzle to solve! "
+				+ "(The puzzles are in the puzzle folder in the projects direcotry)");
+		System.out.println("Example: diabotical-puzzle.txt");
+		System.out.println("type 0 to solve all puzzles");
 		
-		// All puzzles
-		/*
-			String filename = f.getName();
-			int[][] grid = readPuzzle(filename);
-			
-			Agent a = new Agent(grid);
-			//CSPAgent a = new Agent(grid);
-			//BruteForceAgent a = new BruteForceAgent(grid);
-			//BruteState node = a.bruteForce(a.baseState);
-=======
+		Scanner file = new Scanner(System.in);
 		
-		/*
-		// Only one puzzle
-		long time = 0;
-		for(int i= 0; i < 100; i++) {
-			//Agent a = new Agent(grid);
-			CSPAgent a = new CSPAgent(readPuzzle("unsolvable-puzzle.txt"));
-			//BruteForceAgent a = new BruteForceAgent(readPuzzle("db.txt"));
->>>>>>> f1f23571b12d6356ceb8bdc7981bf92370ae5a42
-			
-			long startTime = System.currentTimeMillis();
-			a.solve();
-			long endTime = System.currentTimeMillis();
-			//a.printBoard();
-			
-			//a.debug();
-			
-			time += (endTime - startTime);
-		}
-		System.out.println("Solving took " + (time / 100.0) + " ms");
-		//*/
-		
-		// All puzzles
-		/*
-		for(File f : listOfFiles) {
-			String filename = f.getName();
-			int[][] grid = readPuzzle(filename);
-			long time = 0;
-			for(int i= 0; i < 1; i++) {
-				Agent a = new Agent(grid);
-				//CSPAgent a = new CSPAgent(grid);
-				//BruteForceAgent a = new BruteForceAgent(grid);
-				
-				long startTime = System.currentTimeMillis();
-				a.solve();
-				long endTime = System.currentTimeMillis();
-				//a.printBoard();
-				time += (endTime - startTime);
+		String fileName = file.nextLine();
+		if(fileName.equals("generate")){
+			/*-------Generator stuff-------*/
+		    // int[][] tester = Generator.SudokuGen();
+			int[][] tester = Generator.SudokuGen();
+		}else if(fileName.equals("0")) {
+			File folder = null;
+			try {
+				folder = new File("puzzles");
+			} catch(Exception e) {
+		    	System.out.println("Could not read folder");
+		    	e.printStackTrace();
+		    	System.exit(1);
+		    }
+			File[] listOfFiles = folder.listFiles();
+			// All puzzles
+			for(File f : listOfFiles) {
+				String filename = f.getName();
+				grid = readPuzzle(filename);
+				long time = 0;
+				long startTime, endTime;
+				for(int i= 0; i < 1; i++) {
+					if(puzzle.equals("1")) {
+						BruteForceAgent a = new BruteForceAgent(grid);
+						startTime = System.currentTimeMillis();
+						a.solve();
+						endTime = System.currentTimeMillis();
+					} else if (puzzle.equals("2")){
+						CSPAgent a = new CSPAgent(grid);
+						startTime = System.currentTimeMillis();
+						a.solve();
+						endTime = System.currentTimeMillis();
+					} else {
+						Agent a = new Agent(grid);
+						startTime = System.currentTimeMillis();
+						a.solve();
+						endTime = System.currentTimeMillis();
+					}
+					//a.printBoard();
+					time += (endTime - startTime);
+				}
+				System.out.println(filename);
+				//a.debug();
+				System.out.println("Solving took " + (time / 100.0) + " ms");
+				System.out.println("");
 			}
-			System.out.println(filename);
-			//a.debug();
-			System.out.println("Solving took " + (time / 100.0) + " ms");
+		} else {
+			// Only one puzzle
+			grid = readPuzzle(fileName);
+			long startTime, endTime;
+			if(puzzle.equals("1")) {
+				BruteForceAgent a = new BruteForceAgent(grid);
+				startTime = System.currentTimeMillis();
+				a.solve();
+				endTime = System.currentTimeMillis();
+			} else if (puzzle.equals("2")){
+				System.out.println("supdoge");
+				CSPAgent a = new CSPAgent(grid);
+				startTime = System.currentTimeMillis();
+				a.solve();
+				endTime = System.currentTimeMillis();
+				a.printBoard();
+			} else {
+				Agent a = new Agent(grid);
+				startTime = System.currentTimeMillis();
+				a.solve();
+				endTime = System.currentTimeMillis();
+				a.printBoard();
+			}
+			System.out.println(fileName + "-puzzle.txt");
+			System.out.println("Solving took " + (endTime - startTime) + " ms");
 			System.out.println("");
-*/
-			
-		}
-
-		//*/
+			}
 	}
-
+}
