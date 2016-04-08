@@ -56,7 +56,13 @@ public class Main {
 	 * main procedure
 	 */
 	public static void main(String[] args) throws Exception {
-	    File folder = null;
+	    /*-------Generator stuff-------*/
+	   // int[][] tester = Generator.SudokuGen();
+		int[][] tester = UniqueGenerator.UniqueSudokuGen();
+
+
+	    /*------CSP stuff--------
+		File folder = null;
 		try {
 			folder = new File("puzzles");
 		} catch(Exception e) {
@@ -65,6 +71,7 @@ public class Main {
 	    	System.exit(1);
 	    }
 		File[] listOfFiles = folder.listFiles();
+		*/
 		/*
 		// Only one puzzle
 		CSPAgent a = new CSPAgent(readPuzzle("deathBlossom-puzzle.txt"));
@@ -82,7 +89,7 @@ public class Main {
 		*/
 		
 		// All puzzles
-		for(File f : listOfFiles) {
+		/*
 			String filename = f.getName();
 			int[][] grid = readPuzzle(filename);
 			
@@ -99,7 +106,7 @@ public class Main {
 			System.out.println("Unknowns are : " + a.countUnknowns());
 			System.out.println("Solving took " + (endTime - startTime) + " ms");
 			System.out.println("");
-		}
+		}*/
 		//*/
 	}
 }

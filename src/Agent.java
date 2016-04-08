@@ -75,6 +75,45 @@ public class Agent {
         }
 
     }
+    //Used for the generator
+    public boolean solutionChecker(){
+
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++) {
+                if(SudokuPuzzle.getCell(i,j) == 0){
+                    ripped[i][j] = VariableFactory.enumerated(i + ", " + j, 1, SIZE, solver);
+                }
+                else{
+                    ripped[i][j] = VariableFactory.fixed(SudokuPuzzle.getCell(i,j), solver);
+                }
+                colons[j][i] = ripped[i][j];
+            }
+        }
+
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                for(int k = 0; k < 3; k++){
+                    boxing[j+k*3][i] = ripped[k*3][i+j*3];
+                    boxing[j+k*3][i+3] = ripped[1+k*3][i+j*3];
+                    boxing[j+k*3][i+6] = ripped[2+k*3][i+j*3];
+                }
+            }
+        }
+
+        for(int i = 0; i < SIZE; i++){
+            solver.post(IntConstraintFactory.alldifferent(ripped[i], "DEFAULT"));
+            solver.post(IntConstraintFactory.alldifferent(colons[i], "DEFAULT"));
+            solver.post(IntConstraintFactory.alldifferent(boxing[i], "DEFAULT"));
+        }
+
+
+        //solver.set(IntStrategyFactory.firstFail_InDomainMin(ArrayUtils.append(ripped)));
+        solver.set(IntStrategyFactory.minDom_LB(ArrayUtils.append(ripped)));
+        solver.findSolution();
+        return solver.nextSolution();
+       //ystem.out.println("Number of solutions: " + theCheck);
+
+    }
 
     public int countUnknowns() {
 		int unknowns = 0;

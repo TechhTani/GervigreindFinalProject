@@ -3,45 +3,41 @@
  */
 import java.util.Random;
 
-import org.chocosolver.solver.Solver;
-import org.chocosolver.solver.constraints.IntConstraintFactory;
-import org.chocosolver.solver.search.strategy.IntStrategyFactory;
-import org.chocosolver.solver.variables.IntVar;
-import org.chocosolver.solver.variables.VariableFactory;
-import org.chocosolver.util.tools.ArrayUtils;
 public class Generator {
 
 
 
     public static int[][] SudokuGen(){
         int[][] newBoard = new int[9][9];
-
+        System.out.print("Getting board....");
         newBoard = getFullBoard(newBoard);
-        System.out.println("DA BOARD IS HEA");
-        Printer(newBoard);
+        //System.out.println("DA BOARD IS HEA");
+        //Printer(newBoard);
 
-
+        System.out.print("check!\n");
         return newBoard;
     }
     public static int[][] getFullBoard(int [][] theBoard){
         Random rand = new Random();
         Boolean puzzleFound = false;
-        int numbersonboard = 0;
         while(!puzzleFound){
+            int[][] newBoard = new int[9][9];
             int numberOfClues = 0;
             while(numberOfClues < 17) {
                 int randomX = rand.nextInt(9);
                 int randomY = rand.nextInt(9);
                 int randomValue = rand.nextInt((9 - 1) + 1) + 1;
-                if (theBoard[randomX][randomY] == 0) {
-                    theBoard[randomX][randomY] = randomValue;
+                if (newBoard[randomX][randomY] == 0) {
+                    newBoard[randomX][randomY] = randomValue;
                     numberOfClues += 1;
                 }
             }
-            CSPAgent tester = new CSPAgent(theBoard);
-            if(tester.solve()){
-                puzzleFound = true;
+            BruteForceAgent BruteFA = new BruteForceAgent(newBoard);
+            if(BruteFA.baseState.checkIfSudokuIsValid()){
+                    theBoard = newBoard;
+                    puzzleFound = true;
             }
+
         }
         return theBoard;
     }
@@ -79,7 +75,13 @@ public class Generator {
 
         sb.append("\t");
         for (int i = 0; i < 9; i++) {
+            if(i%3 == 0 && i != 0){
+                sb.append("------------------------------- \n\t");
+            }
             for (int j = 0; j < 9; j++) {
+                if(j%3==0 && j!=0){
+                    sb.append("|  ");
+                }
                 sb.append(printBoard[i][j]).append("  ");
             }
             sb.append("\n\t");
